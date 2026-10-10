@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import type { Owner } from "@/lib/generated/prisma/enums";
 import { addChange, confirmChange, removeChange, showToast, type PendingChange } from "@/lib/pending-store";
 import { useGoBack } from "@/components/back-link";
 import { wishInputSchema } from "@/lib/wish-input";
@@ -50,13 +51,13 @@ export function useWishMutations() {
   }
 
   return {
-    create(raw: RawWishInput) {
+    create(raw: RawWishInput, owner: Owner) {
       const input = parseOrToast(raw);
       if (!input) return;
       const id = crypto.randomUUID();
       return run(
-        { type: "create", id, input, at: Date.now() },
-        () => send("/api/wishes", "POST", { ...raw, id }),
+        { type: "create", id, input, owner, at: Date.now() },
+        () => send("/api/wishes", "POST", { ...raw, id, owner }),
         "Le wish n'a pas été ajouté.",
       );
     },

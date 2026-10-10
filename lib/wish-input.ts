@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { withProtocol } from "@/lib/format";
+import { stripEuro, withProtocol } from "@/lib/format";
 
 // Seules les photos de notre store Vercel Blob public sont acceptées
 const BLOB_URL = /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//i;
@@ -14,7 +14,11 @@ const optionalText = (max: number) =>
 
 export const wishInputSchema = z.object({
   title: z.string().trim().min(1, "Le titre est obligatoire").max(200),
-  price: optionalText(50),
+  price: z
+    .string()
+    .max(50)
+    .transform((value) => stripEuro(value) || null)
+    .nullable(),
   comment: optionalText(2000),
   photoUrl: z
     .string()
@@ -27,7 +31,10 @@ export const wishInputSchema = z.object({
     .transform((links) => links.filter(Boolean).map(withProtocol)),
 });
 
-export const createWishSchema = wishInputSchema.extend({ id: z.uuid() });
+export const createWishSchema = wishInputSchema.extend({
+  id: z.uuid(),
+  owner: z.enum(["ROJO", "SONNY"]),
+});
 
 export type WishInput = z.output<typeof wishInputSchema>;
 

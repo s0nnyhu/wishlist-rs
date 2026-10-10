@@ -5,6 +5,9 @@ import { DeleteSheet } from "@/components/delete-sheet";
 import { LinksField } from "@/components/links-field";
 import { PhotoField } from "@/components/photo-field";
 import type { Wish } from "@/lib/generated/prisma/client";
+import type { Owner } from "@/lib/generated/prisma/enums";
+import { ownerLabel } from "@/lib/owners";
+import { stripEuro } from "@/lib/format";
 import { useWishMutations } from "@/lib/use-wish-mutations";
 import { readWishForm } from "@/lib/wish-input";
 
@@ -12,21 +15,25 @@ const inputClass =
   "mt-1.5 block h-12 w-full rounded-xl border border-line bg-white px-3.5 text-base outline-none focus:outline-2 focus:outline-offset-1 focus:outline-accent";
 const labelClass = "mb-3.5 block text-[13px] font-semibold text-body";
 
-export function WishForm({ wish }: { wish?: Wish }) {
+type Props =
+  | { wish: Wish; owner?: never }
+  | { wish?: never; owner: Owner };
+
+export function WishForm({ wish, owner }: Props) {
   const mutations = useWishMutations();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const input = readWishForm(new FormData(event.currentTarget));
     if (wish) mutations.update(wish.id, input);
-    else mutations.create(input);
+    else mutations.create(input, owner);
   }
 
   return (
     <>
       <div className="flex h-11 items-center justify-between">
         <BackLink className="press text-base font-semibold leading-[44px] text-accent">Annuler</BackLink>
-        <span className="text-[13px] text-muted">{wish ? "Modification" : "Étape unique"}</span>
+        <span className="text-[13px] text-muted">{wish ? `Liste de ${ownerLabel(wish.owner)}` : `Pour ${ownerLabel(owner)}`}</span>
       </div>
 
       <h1 className="mb-[22px] mt-3.5 font-serif text-[38px] font-bold leading-[1.05] tracking-tight">
@@ -50,14 +57,22 @@ export function WishForm({ wish }: { wish?: Wish }) {
 
         <label className={labelClass}>
           Prix <span className="font-normal text-muted">(facultatif)</span>
-          <input
-            name="price"
-            inputMode="decimal"
-            maxLength={50}
-            defaultValue={wish?.price ?? ""}
-            placeholder="289 €"
-            className={inputClass}
-          />
+          <span className="relative mt-1.5 block">
+            <input
+              name="price"
+              inputMode="decimal"
+              maxLength={50}
+              defaultValue={stripEuro(wish?.price ?? "")}
+              placeholder="289"
+              className={`${inputClass.replace("mt-1.5 ", "")} pr-10`}
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-3.5 flex items-center text-base font-semibold text-muted"
+            >
+              €
+            </span>
+          </span>
         </label>
 
         <label className={labelClass}>

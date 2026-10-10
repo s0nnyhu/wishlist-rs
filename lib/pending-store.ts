@@ -1,11 +1,12 @@
 import { useSyncExternalStore } from "react";
 import type { Wish } from "@/lib/generated/prisma/client";
+import type { Owner } from "@/lib/generated/prisma/enums";
 import type { WishInput } from "@/lib/wish-input";
 
 // Changements affichés avant la réponse du serveur (mise à jour optimiste).
 // Ils sont retirés dès que les données du serveur les reflètent, ou en cas d'échec.
 export type PendingChange = (
-  | { type: "create"; id: string; input: WishInput }
+  | { type: "create"; id: string; input: WishInput; owner: Owner }
   | { type: "update"; id: string; input: WishInput }
   | { type: "delete"; id: string }
 ) & { at: number; confirmed?: boolean };
@@ -85,7 +86,7 @@ export function applyChanges(wishes: Wish[], pending: PendingChange[]): Displaye
     } else if (!result.some((wish) => wish.id === change.id)) {
       const now = new Date(change.at);
       result = [
-        { ...change.input, id: change.id, addedBy: null, createdAt: now, updatedAt: now, pending: true },
+        { ...change.input, id: change.id, owner: change.owner, addedBy: null, createdAt: now, updatedAt: now, pending: true },
         ...result,
       ];
     }

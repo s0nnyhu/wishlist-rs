@@ -7,6 +7,13 @@ datasource db {
   provider = "postgresql"
 }
 
+// À qui appartient le wish : correspond à l'onglet de la page d'accueil
+enum Owner {
+  ROJO
+  SONNY
+}
+
+// Anciens profils R / S, remplacés par Owner
 enum Person {
   R
   S
@@ -19,6 +26,8 @@ model Wish {
   comment   String?
   photoUrl  String?
   links     String[]
+  // La valeur par défaut garde compatible la version déjà déployée, qui ne renseigne pas owner
+  owner     Owner    @default(ROJO)
   // Ancien auteur (profils R / S, abandonnés) : plus renseigné par l'app
   addedBy   Person?
   createdAt DateTime @default(now())
