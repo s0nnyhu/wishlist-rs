@@ -47,7 +47,7 @@ export function WishList({ wishes }: { wishes: Wish[] }) {
       </div>
 
       <BrandTitle className="mb-2 mt-3 text-[46px]" />
-      <p className="mb-5 text-[15px] text-muted">Ajoute ce qui te fait envie, même les folies.</p>
+      <p className="mb-5 text-[15px] text-muted">Ajoute ce qui te fait envie ma BELLE</p>
 
       <div role="tablist" aria-label="Listes" className="mb-[18px] grid grid-cols-2 gap-1 rounded-[14px] bg-[#f0d9e1] p-1">
         {OWNERS.map((item) => {
