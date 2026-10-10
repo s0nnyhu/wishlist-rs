@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Person {
+  R
+  S
+}
+
+model Wish {
+  id        String   @id @default(cuid())
+  title     String
+  price     String?
+  comment   String?
+  photoUrl  String?
+  links     String[]
+  addedBy   Person
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
