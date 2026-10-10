@@ -19,7 +19,8 @@ model Wish {
   comment   String?
   photoUrl  String?
   links     String[]
-  addedBy   Person
+  // Ancien auteur (profils R / S, abandonnés) : plus renseigné par l'app
+  addedBy   Person?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,6 +1,5 @@
 import { useSyncExternalStore } from "react";
 import type { Wish } from "@/lib/generated/prisma/client";
-import type { Profile } from "@/lib/session";
 import type { WishInput } from "@/lib/wish-input";
 
 // Changements affichés avant la réponse du serveur (mise à jour optimiste).
@@ -75,7 +74,7 @@ export function useToast() {
 }
 
 // Applique les changements en attente à la liste venue du serveur
-export function applyChanges(wishes: Wish[], pending: PendingChange[], viewer: Profile): DisplayedWish[] {
+export function applyChanges(wishes: Wish[], pending: PendingChange[]): DisplayedWish[] {
   let result: DisplayedWish[] = wishes;
 
   for (const change of pending) {
@@ -86,7 +85,7 @@ export function applyChanges(wishes: Wish[], pending: PendingChange[], viewer: P
     } else if (!result.some((wish) => wish.id === change.id)) {
       const now = new Date(change.at);
       result = [
-        { ...change.input, id: change.id, addedBy: viewer, createdAt: now, updatedAt: now, pending: true },
+        { ...change.input, id: change.id, addedBy: null, createdAt: now, updatedAt: now, pending: true },
         ...result,
       ];
     }

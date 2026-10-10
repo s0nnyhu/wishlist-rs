@@ -1,6 +1,6 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
-import { getSession } from "@/lib/session";
+import { isLoggedIn } from "@/lib/session";
 import { jsonError } from "@/lib/api";
 
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     return jsonError("Le stockage des photos n'est pas configuré.", 500);
   }
 
-  if (!(await getSession())) return jsonError("Session expirée, reconnecte-toi.", 401);
+  if (!(await isLoggedIn())) return jsonError("Session expirée, reconnecte-toi.", 401);
 
   try {
     const body = (await request.json()) as HandleUploadBody;

@@ -1,12 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, readSession } from "@/lib/session";
+import { SESSION_COOKIE, isValidSession } from "@/lib/session";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (pathname.startsWith("/connexion")) return NextResponse.next();
 
-  const session = readSession(request.cookies.get(SESSION_COOKIE)?.value);
-  if (session) return NextResponse.next();
+  if (isValidSession(request.cookies.get(SESSION_COOKIE)?.value)) return NextResponse.next();
 
   // Les appels d'API reçoivent une erreur JSON, les pages une redirection vers la connexion
   if (pathname.startsWith("/api/")) {

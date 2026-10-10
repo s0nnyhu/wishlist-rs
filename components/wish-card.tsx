@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Wish } from "@/lib/generated/prisma/client";
-import type { Profile } from "@/lib/session";
 import { timeAgo, withProtocol } from "@/lib/format";
 
-type Props = { wish: Wish; viewer: Profile; pending?: boolean };
+type Props = { wish: Wish; pending?: boolean };
 
-export function WishCard({ wish, viewer, pending = false }: Props) {
-  const author = wish.addedBy === viewer ? "toi" : wish.addedBy;
+export function WishCard({ wish, pending = false }: Props) {
   const firstLink = wish.links[0];
 
   return (
@@ -39,7 +37,7 @@ export function WishCard({ wish, viewer, pending = false }: Props) {
               href={withProtocol(firstLink)}
               target="_blank"
               rel="noreferrer"
-              className="font-semibold text-accent"
+              className="whitespace-nowrap font-semibold text-accent"
             >
               Voir le lien →
             </a>
@@ -48,8 +46,8 @@ export function WishCard({ wish, viewer, pending = false }: Props) {
           )}
           <span className="flex items-center gap-3">
             {/* Le temps relatif peut différer de quelques secondes entre serveur et navigateur */}
-            <span suppressHydrationWarning>
-              par {author} · {timeAgo(wish.createdAt)}
+            <span suppressHydrationWarning className="whitespace-nowrap">
+              {timeAgo(wish.createdAt)}
             </span>
             {pending ? (
               <span className="font-semibold">Enregistrement…</span>

@@ -11,11 +11,6 @@ export function WishListSkeleton() {
       </div>
       <Block className="mb-2 mt-4 h-11 w-3/5" />
       <Block className="mb-5 h-4 w-4/5" />
-      <div className="mb-[18px] flex gap-2">
-        <Block className="h-9 w-20 rounded-full" />
-        <Block className="h-9 w-24 rounded-full" />
-        <Block className="h-9 w-24 rounded-full" />
-      </div>
       {[0, 1, 2].map((index) => (
         <div key={index} className="mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4">
           <Block className="size-[72px] shrink-0 rounded-xl" />

@@ -2,9 +2,6 @@ import { createHash, createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 import { connection } from "next/server";
 
-export const PROFILES = ["R", "S"] as const;
-export type Profile = (typeof PROFILES)[number];
-
 export const SESSION_COOKIE = "carnet_session";
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
 
@@ -28,26 +25,24 @@ export function checkPassword(password: string): boolean {
   return safeEqual(password, secret());
 }
 
-export function createSessionValue(profile: Profile): string {
-  const payload = `${profile}.${Date.now() + MAX_AGE_SECONDS * 1000}`;
+// Session signée : "session.<expiration>.<signature>"
+export function createSessionValue(): string {
+  const payload = `session.${Date.now() + MAX_AGE_SECONDS * 1000}`;
   return `${payload}.${sign(payload)}`;
 }
 
-export function readSession(value?: string): Profile | null {
-  if (!value) return null;
+export function isValidSession(value?: string): boolean {
+  if (!value) return false;
 
-  const [profile, expiresAt, signature] = value.split(".");
-  if (!PROFILES.includes(profile as Profile)) return null;
-  if (Number(expiresAt) < Date.now()) return null;
-  if (!safeEqual(signature ?? "", sign(`${profile}.${expiresAt}`))) return null;
-
-  return profile as Profile;
+  const [kind, expiresAt, signature] = value.split(".");
+  if (kind !== "session" || Number(expiresAt) < Date.now()) return false;
+  return safeEqual(signature ?? "", sign(`${kind}.${expiresAt}`));
 }
 
-export async function getSession(): Promise<Profile | null> {
+export async function isLoggedIn(): Promise<boolean> {
   await connection();
   const store = await cookies();
-  return readSession(store.get(SESSION_COOKIE)?.value);
+  return isValidSession(store.get(SESSION_COOKIE)?.value);
 }
 
 export const sessionCookieOptions = {
