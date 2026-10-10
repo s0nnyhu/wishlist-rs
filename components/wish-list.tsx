@@ -30,7 +30,7 @@ export function WishList({ wishes }: { wishes: Wish[] }) {
           </SubmitButton>
         </form>
         <span>
-          {displayed.length} {displayed.length > 1 ? "envies" : "envie"}
+          {displayed.length} {displayed.length > 1 ? "wishes" : "wish"}
         </span>
       </div>
 
@@ -41,7 +41,7 @@ export function WishList({ wishes }: { wishes: Wish[] }) {
         <WishCard key={wish.id} wish={wish} pending={wish.pending} />
       ))}
       {displayed.length === 0 && (
-        <p className="mt-8 text-center text-muted">Rien pour l&apos;instant. Ajoute la première envie.</p>
+        <p className="mt-8 text-center text-muted">Rien pour l&apos;instant. Ajoute le premier wish.</p>
       )}
     </>
   );

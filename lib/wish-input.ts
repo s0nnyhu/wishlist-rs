@@ -31,7 +31,7 @@ export const createWishSchema = wishInputSchema.extend({ id: z.uuid() });
 
 export type WishInput = z.output<typeof wishInputSchema>;
 
-// Lit le formulaire d'envie côté navigateur, dans la forme attendue par l'API
+// Lit le formulaire de wish côté navigateur, dans la forme attendue par l'API
 export function readWishForm(formData: FormData) {
   return {
     title: String(formData.get("title") ?? ""),

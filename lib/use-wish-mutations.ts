@@ -57,7 +57,7 @@ export function useWishMutations() {
       return run(
         { type: "create", id, input, at: Date.now() },
         () => send("/api/wishes", "POST", { ...raw, id }),
-        "L'envie n'a pas été ajoutée.",
+        "Le wish n'a pas été ajouté.",
       );
     },
     update(id: string, raw: RawWishInput) {
@@ -73,7 +73,7 @@ export function useWishMutations() {
       return run(
         { type: "delete", id, at: Date.now() },
         () => send(`/api/wishes/${id}`, "DELETE"),
-        "L'envie n'a pas été supprimée.",
+        "Le wish n'a pas été supprimé.",
       );
     },
   };

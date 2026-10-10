@@ -17,7 +17,7 @@ export default async function HomePage() {
         href="/wishes/new"
         className="press fixed bottom-7 left-1/2 flex h-14 w-[342px] max-w-[calc(100%-48px)] -translate-x-1/2 items-center justify-center rounded-[28px] bg-plum text-base font-semibold text-bg shadow-lg shadow-plum/20"
       >
-        + Ajouter une envie
+        + Ajouter un wish
       </Link>
     </>
   );

@@ -30,7 +30,7 @@ export function WishForm({ wish }: { wish?: Wish }) {
       </div>
 
       <h1 className="mb-[22px] mt-3.5 font-serif text-[38px] font-bold leading-[1.05] tracking-tight">
-        {wish ? "Modifier" : "Nouvelle"} <em className="font-medium text-accent">{wish ? "l'envie" : "envie"}</em>
+        {wish ? "Modifier" : "Nouveau"} <em className="font-medium text-accent">{wish ? "le wish" : "wish"}</em>
       </h1>
 
       <form onSubmit={handleSubmit}>
@@ -78,7 +78,7 @@ export function WishForm({ wish }: { wish?: Wish }) {
           type="submit"
           className="press fixed bottom-7 left-1/2 z-10 h-14 w-[342px] max-w-[calc(100%-48px)] -translate-x-1/2 rounded-[28px] bg-plum text-base font-semibold text-bg shadow-lg shadow-plum/20"
         >
-          {wish ? "Enregistrer" : "Enregistrer l'envie"}
+          {wish ? "Enregistrer" : "Enregistrer le wish"}
         </button>
       </form>
 

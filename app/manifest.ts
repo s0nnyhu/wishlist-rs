@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Wishlist",
     short_name: "Wishlist",
-    description: "Nos envies à deux",
+    description: "Nos wishes à deux",
     start_url: "/",
     display: "standalone",
     background_color: "#fbf1f4",

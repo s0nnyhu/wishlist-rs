@@ -39,7 +39,7 @@ export function DeleteSheet({ title, onConfirm }: Props) {
         className="press mt-3.5 flex h-12 w-full items-center justify-center gap-2 rounded-3xl border border-accent text-[15px] font-semibold text-accent"
       >
         <Trash2 aria-hidden="true" className="size-4" />
-        Supprimer cette envie
+        Supprimer ce wish
       </button>
 
       {open && (
@@ -54,7 +54,7 @@ export function DeleteSheet({ title, onConfirm }: Props) {
           >
             <div className="mx-auto mb-5 h-1.5 w-10 rounded-full bg-line" />
             <h2 id="titre-suppr" className="mb-2.5 font-serif text-[26px] font-bold leading-tight">
-              Supprimer cette envie ?
+              Supprimer ce wish ?
             </h2>
             <p className="mb-6 text-[15px] leading-relaxed text-body">
               « {title} » sera retiré de la liste pour vous deux. Cette action est définitive.

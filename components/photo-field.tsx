@@ -84,7 +84,7 @@ export function PhotoField({ initialUrl }: { initialUrl?: string | null }) {
           <div className="relative size-[72px] shrink-0">
             <Image
               src={preview}
-              alt="Photo de l'envie"
+              alt="Photo du wish"
               width={72}
               height={72}
               unoptimized

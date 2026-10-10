@@ -19,7 +19,7 @@ const figtree = Figtree({
 
 export const metadata: Metadata = {
   title: "Wishlist",
-  description: "Nos envies à deux",
+  description: "Nos wishes à deux",
   // Ouverture en plein écran depuis l'écran d'accueil iPhone, avec ce nom sous l'icône
   appleWebApp: {
     capable: true,

@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
-// Toutes les envies, mises en cache et invalidées par updateTag("wishes") après chaque modification
+// Tous les wishes, mises en cache et invalidées par updateTag("wishes") après chaque modification
 export async function getAllWishes() {
   "use cache";
   cacheTag("wishes");

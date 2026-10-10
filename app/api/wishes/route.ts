@@ -13,8 +13,8 @@ export async function POST(request: Request) {
   try {
     await prisma.wish.create({ data: parsed.data });
   } catch (error) {
-    console.error("Création d'envie échouée", error);
-    return jsonError("L'envie n'a pas pu être enregistrée.", 500);
+    console.error("Création de wish échouée", error);
+    return jsonError("Le wish n'a pas pu être enregistré.", 500);
   }
 
   invalidateWishes();
