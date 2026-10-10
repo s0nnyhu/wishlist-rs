@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { login } from "@/lib/actions";
+import { BrandTitle } from "@/components/brand-title";
 
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(login, null);
@@ -9,9 +10,7 @@ export function LoginForm() {
 
   return (
     <form action={formAction} className="flex flex-col">
-      <h1 className="mb-2 font-serif text-[44px] font-bold leading-none tracking-tight">
-        Nos <em className="font-medium not-italic text-accent italic">envies</em>
-      </h1>
+      <BrandTitle className="mb-2 text-[44px]" />
       <p className="mb-8 text-[15px] text-muted">Entre le mot de passe pour voir la liste.</p>
 
       <div className="text-[13px] font-semibold text-body">
@@ -44,7 +43,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="fixed bottom-7 left-1/2 h-14 w-[342px] max-w-[calc(100%-48px)] -translate-x-1/2 rounded-[28px] bg-plum text-base font-semibold text-bg disabled:opacity-60"
+        className="press mt-6 h-14 w-full rounded-[28px] bg-plum text-base font-semibold text-bg disabled:opacity-60"
       >
         {pending ? "Connexion…" : "Entrer"}
       </button>

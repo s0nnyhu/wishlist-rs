@@ -5,6 +5,7 @@ import type { Wish } from "@/lib/generated/prisma/client";
 import { logout } from "@/lib/actions";
 import { applyChanges, pruneChanges, usePendingChanges } from "@/lib/pending-store";
 import { SubmitButton } from "@/components/submit-button";
+import { BrandTitle } from "@/components/brand-title";
 import { WishCard } from "@/components/wish-card";
 
 export function WishList({ wishes }: { wishes: Wish[] }) {
@@ -28,9 +29,7 @@ export function WishList({ wishes }: { wishes: Wish[] }) {
         </span>
       </div>
 
-      <h1 className="mb-2 mt-3 font-serif text-[46px] font-bold leading-none tracking-tight">
-        Nos <em className="font-medium text-accent">envies</em>
-      </h1>
+      <BrandTitle className="mb-2 mt-3 text-[46px]" />
       <p className="mb-5 text-[15px] text-muted">Ajoute ce qui te fait envie, même les folies.</p>
 
       {displayed.map((wish) => (

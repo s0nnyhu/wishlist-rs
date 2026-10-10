@@ -31,7 +31,7 @@ export function WishCard({ wish, pending = false }: Props) {
 
         {wish.comment && <p className="mb-2.5 mt-1.5 text-sm italic text-body">« {wish.comment} »</p>}
 
-        <div className="mt-2.5 flex items-center justify-between gap-2 text-[13px] text-muted">
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[13px] text-muted">
           {firstLink ? (
             <a
               href={withProtocol(firstLink)}
@@ -44,7 +44,7 @@ export function WishCard({ wish, pending = false }: Props) {
           ) : (
             <span />
           )}
-          <span className="flex items-center gap-3">
+          <span className="ml-auto flex items-center gap-3">
             {/* Le temps relatif peut différer de quelques secondes entre serveur et navigateur */}
             <span suppressHydrationWarning className="whitespace-nowrap">
               {timeAgo(wish.createdAt)}

@@ -18,7 +18,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Carnet",
+  title: "Wishlist",
   description: "Nos envies à deux",
 };
 
