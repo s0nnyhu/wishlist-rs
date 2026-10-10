@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Fraunces, Figtree } from "next/font/google";
+import { NavigationTracker } from "@/components/back-link";
+import { Toast } from "@/components/toast";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -19,13 +22,19 @@ export const metadata: Metadata = {
   description: "Nos envies à deux",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#fbf1f4",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${fraunces.variable} ${figtree.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <main className="relative mx-auto min-h-dvh max-w-[390px] overflow-hidden px-6 pb-32 pt-14">
-          {children}
-        </main>
+        <Suspense fallback={null}>
+          <NavigationTracker />
+        </Suspense>
+        <Toast />
+        <main className="relative mx-auto min-h-dvh max-w-[390px] px-6 pb-32 pt-14">{children}</main>
       </body>
     </html>
   );

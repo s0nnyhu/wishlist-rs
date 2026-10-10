@@ -11,10 +11,48 @@
   --color-blush: #f6d6e0;
   --font-serif: var(--font-fraunces);
   --font-sans: var(--font-figtree);
+
+  --animate-page-in: page-in 0.2s ease-out both;
+  --animate-fade-in: fade-in 0.2s ease-out both;
+  --animate-slide-up: slide-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Opacité seulement : un transform casserait les boutons en position fixed */
+@keyframes page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans), sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Retour tactile sur tous les éléments cliquables */
+@layer components {
+  .press {
+    transition: transform 120ms ease-out, opacity 120ms ease-out;
+  }
+  .press:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

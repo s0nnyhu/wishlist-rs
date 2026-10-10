@@ -4,20 +4,16 @@ import type { Wish } from "@/lib/generated/prisma/client";
 import type { Profile } from "@/lib/session";
 import { timeAgo, withProtocol } from "@/lib/format";
 
-type Props = {
-  wish: Wish;
-  viewer: Profile;
-  dimmed?: boolean;
-  showEdit?: boolean;
-};
+type Props = { wish: Wish; viewer: Profile; pending?: boolean };
 
-export function WishCard({ wish, viewer, dimmed = false, showEdit = true }: Props) {
+export function WishCard({ wish, viewer, pending = false }: Props) {
   const author = wish.addedBy === viewer ? "toi" : wish.addedBy;
   const firstLink = wish.links[0];
 
   return (
     <article
-      className={`mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4 ${dimmed ? "opacity-50" : ""}`}
+      aria-busy={pending}
+      className={`mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4 transition-opacity ${pending ? "opacity-70" : ""}`}
     >
       {wish.photoUrl && (
         <Image
@@ -25,7 +21,7 @@ export function WishCard({ wish, viewer, dimmed = false, showEdit = true }: Prop
           alt=""
           width={72}
           height={72}
-          className="size-[72px] shrink-0 rounded-xl object-cover"
+          className="size-[72px] shrink-0 rounded-xl bg-blush object-cover"
         />
       )}
 
@@ -35,24 +31,30 @@ export function WishCard({ wish, viewer, dimmed = false, showEdit = true }: Prop
           {wish.price && <span className="whitespace-nowrap text-sm font-semibold">{wish.price}</span>}
         </div>
 
-        {wish.comment && (
-          <p className="mb-2.5 mt-1.5 text-sm italic text-body">« {wish.comment} »</p>
-        )}
+        {wish.comment && <p className="mb-2.5 mt-1.5 text-sm italic text-body">« {wish.comment} »</p>}
 
         <div className="mt-2.5 flex items-center justify-between gap-2 text-[13px] text-muted">
           {firstLink ? (
-            <a href={withProtocol(firstLink)} target="_blank" rel="noreferrer" className="font-semibold text-accent">
+            <a
+              href={withProtocol(firstLink)}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-accent"
+            >
               Voir le lien →
             </a>
           ) : (
             <span />
           )}
           <span className="flex items-center gap-3">
-            <span>
+            {/* Le temps relatif peut différer de quelques secondes entre serveur et navigateur */}
+            <span suppressHydrationWarning>
               par {author} · {timeAgo(wish.createdAt)}
             </span>
-            {showEdit && (
-              <Link href={`/wishes/${wish.id}/edit`} className="font-semibold text-accent">
+            {pending ? (
+              <span className="font-semibold">Enregistrement…</span>
+            ) : (
+              <Link href={`/wishes/${wish.id}/edit`} className="press font-semibold text-accent">
                 Modifier
               </Link>
             )}

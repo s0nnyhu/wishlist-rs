@@ -6,10 +6,13 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith("/connexion")) return NextResponse.next();
 
   const session = readSession(request.cookies.get(SESSION_COOKIE)?.value);
-  if (!session) {
-    return NextResponse.redirect(new URL("/connexion", request.url));
+  if (session) return NextResponse.next();
+
+  // Les appels d'API reçoivent une erreur JSON, les pages une redirection vers la connexion
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.json({ error: "Session expirée, reconnecte-toi." }, { status: 401 });
   }
-  return NextResponse.next();
+  return NextResponse.redirect(new URL("/connexion", request.url));
 }
 
 export const config = {

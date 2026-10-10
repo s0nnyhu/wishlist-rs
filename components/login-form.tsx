@@ -17,14 +17,22 @@ export function LoginForm() {
       <fieldset className="mb-7">
         <legend className="mb-3 text-[13px] font-semibold text-body">Choisis ton profil</legend>
         <div className="flex gap-3.5">
-          {["R", "S"].map((profile) => (
-            <label key={profile} className="group relative flex-1 cursor-pointer">
-              <input type="radio" name="profil" value={profile} required className="peer sr-only" />
+          {["R", "S"].map((option) => (
+            <label key={option} className="group relative flex-1 cursor-pointer">
+              <input
+                type="radio"
+                name="profil"
+                value={option}
+                required
+                // Après une erreur, React réinitialise le formulaire : on recoche le profil renvoyé par l'action
+                defaultChecked={state?.profile === option}
+                className="peer sr-only"
+              />
               <span className="flex h-[150px] flex-col items-center justify-center gap-3 rounded-[20px] border border-line bg-white text-plum peer-checked:border-plum peer-checked:bg-plum peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-[3px] peer-focus-visible:outline-accent">
                 <span className="flex size-[72px] items-center justify-center rounded-full bg-blush font-serif text-[32px] font-bold text-plum group-has-[:checked]:bg-bg">
-                  {profile}
+                  {option}
                 </span>
-                <span className="text-[15px] font-semibold">Profil {profile}</span>
+                <span className="text-[15px] font-semibold">Profil {option}</span>
               </span>
             </label>
           ))}
