@@ -40,6 +40,21 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Curseur main sur tout ce qui est cliquable (Tailwind remet les boutons en curseur par défaut) */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label:has(> input[type="file"]),
+  label:has(> input[type="radio"]),
+  select {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
 /* Retour tactile sur tous les éléments cliquables */
 @layer components {
   .press {

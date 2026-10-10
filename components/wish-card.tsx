@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ExternalLink, Pencil } from "lucide-react";
 import type { Wish } from "@/lib/generated/prisma/client";
 import { timeAgo, withProtocol } from "@/lib/format";
 
@@ -37,9 +38,10 @@ export function WishCard({ wish, pending = false }: Props) {
               href={withProtocol(firstLink)}
               target="_blank"
               rel="noreferrer"
-              className="whitespace-nowrap font-semibold text-accent"
+              className="inline-flex items-center gap-1 whitespace-nowrap font-semibold text-accent"
             >
-              Voir le lien →
+              <ExternalLink aria-hidden="true" className="size-3.5" />
+              Voir le lien
             </a>
           ) : (
             <span />
@@ -52,7 +54,11 @@ export function WishCard({ wish, pending = false }: Props) {
             {pending ? (
               <span className="font-semibold">Enregistrement…</span>
             ) : (
-              <Link href={`/wishes/${wish.id}/edit`} className="press font-semibold text-accent">
+              <Link
+                href={`/wishes/${wish.id}/edit`}
+                className="press inline-flex items-center gap-1 font-semibold text-accent"
+              >
+                <Pencil aria-hidden="true" className="size-3.5" />
                 Modifier
               </Link>
             )}

@@ -1,5 +1,6 @@
 "use client";
 
+import { LogOut } from "lucide-react";
 import { useEffect } from "react";
 import type { Wish } from "@/lib/generated/prisma/client";
 import { logout } from "@/lib/actions";
@@ -20,7 +21,11 @@ export function WishList({ wishes }: { wishes: Wish[] }) {
     <>
       <div className="flex items-center justify-between text-[13px] text-muted">
         <form action={logout}>
-          <SubmitButton pendingLabel="Déconnexion…" className="font-semibold text-accent">
+          <SubmitButton
+            pendingLabel="Déconnexion…"
+            className="inline-flex items-center gap-1.5 font-semibold text-accent"
+          >
+            <LogOut aria-hidden="true" className="size-3.5" />
             Se déconnecter
           </SubmitButton>
         </form>

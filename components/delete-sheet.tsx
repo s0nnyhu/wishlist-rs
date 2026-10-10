@@ -1,5 +1,6 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
@@ -35,8 +36,9 @@ export function DeleteSheet({ title, onConfirm }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="press mt-3.5 flex h-12 w-full items-center justify-center rounded-3xl border border-accent text-[15px] font-semibold text-accent"
+        className="press mt-3.5 flex h-12 w-full items-center justify-center gap-2 rounded-3xl border border-accent text-[15px] font-semibold text-accent"
       >
+        <Trash2 aria-hidden="true" className="size-4" />
         Supprimer cette envie
       </button>
 
@@ -72,8 +74,9 @@ export function DeleteSheet({ title, onConfirm }: Props) {
                   setOpen(false);
                   onConfirm();
                 }}
-                className="press h-13 flex-1 rounded-[26px] bg-accent text-base font-semibold text-white"
+                className="press flex h-13 flex-1 items-center justify-center gap-2 rounded-[26px] bg-accent text-base font-semibold text-white"
               >
+                <Trash2 aria-hidden="true" className="size-4" />
                 Supprimer
               </button>
             </div>
