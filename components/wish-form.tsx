@@ -6,7 +6,7 @@ import { LinksField } from "@/components/links-field";
 import { PhotoField } from "@/components/photo-field";
 import type { Wish } from "@/lib/generated/prisma/client";
 import type { Owner } from "@/lib/generated/prisma/enums";
-import { ownerLabel } from "@/lib/owners";
+import { ownerInfo } from "@/lib/owners";
 import { stripEuro } from "@/lib/format";
 import { useWishMutations } from "@/lib/use-wish-mutations";
 import { readWishForm } from "@/lib/wish-input";
@@ -33,7 +33,7 @@ export function WishForm({ wish, owner }: Props) {
     <>
       <div className="flex h-11 items-center justify-between">
         <BackLink className="press text-base font-semibold leading-[44px] text-accent">Annuler</BackLink>
-        <span className="text-[13px] text-muted">{wish ? `Liste de ${ownerLabel(wish.owner)}` : `Pour ${ownerLabel(owner)}`}</span>
+        <span className="text-[13px] text-muted">{ownerInfo(wish ? wish.owner : owner).listTitle}</span>
       </div>
 
       <h1 className="mb-[22px] mt-3.5 font-serif text-[38px] font-bold leading-[1.05] tracking-tight">

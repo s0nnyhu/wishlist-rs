@@ -33,7 +33,7 @@ export const wishInputSchema = z.object({
 
 export const createWishSchema = wishInputSchema.extend({
   id: z.uuid(),
-  owner: z.enum(["ROJO", "SONNY"]),
+  owner: z.enum(["ROJO", "SONNY", "COMMUN"]),
 });
 
 export type WishInput = z.output<typeof wishInputSchema>;

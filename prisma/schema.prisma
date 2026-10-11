@@ -11,6 +11,7 @@ datasource db {
 enum Owner {
   ROJO
   SONNY
+  COMMUN
 }
 
 // Anciens profils R / S, remplacés par Owner
