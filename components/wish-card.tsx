@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Pencil } from "lucide-react";
 import type { Wish } from "@/lib/generated/prisma/client";
+import { PhotoViewer } from "@/components/photo-viewer";
 import { formatPrice, timeAgo, withProtocol } from "@/lib/format";
 
 type Props = { wish: Wish; pending?: boolean };
@@ -14,15 +14,7 @@ export function WishCard({ wish, pending = false }: Props) {
       aria-busy={pending}
       className={`mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4 transition-opacity ${pending ? "opacity-70" : ""}`}
     >
-      {wish.photoUrl && (
-        <Image
-          src={wish.photoUrl}
-          alt=""
-          width={72}
-          height={72}
-          className="size-[72px] shrink-0 rounded-xl bg-blush object-cover"
-        />
-      )}
+      {wish.photoUrl && <PhotoViewer src={wish.photoUrl} title={wish.title} />}
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">

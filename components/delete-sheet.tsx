@@ -1,7 +1,8 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useDialog } from "@/lib/use-dialog";
 
 type Props = {
   title: string;
@@ -13,23 +14,7 @@ export function DeleteSheet({ title, onConfirm }: Props) {
   const [open, setOpen] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-
-    cancelRef.current?.focus();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
-    }
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
+  useDialog(open, () => setOpen(false), cancelRef);
 
   return (
     <>
