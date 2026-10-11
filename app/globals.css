@@ -33,6 +33,12 @@
   to { transform: translateY(0); }
 }
 
+/* Le rafraîchissement natif est remplacé par celui de la page d'accueil (components/pull-to-refresh) */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-ink);
