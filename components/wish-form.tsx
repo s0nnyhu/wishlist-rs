@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useState } from "react";
 import { BackLink } from "@/components/back-link";
 import { DeleteSheet } from "@/components/delete-sheet";
 import { LinksField } from "@/components/links-field";
@@ -21,6 +22,11 @@ type Props =
 
 export function WishForm({ wish, owner }: Props) {
   const mutations = useWishMutations();
+  // Next garde les pages quittées en mémoire (React Activity) et les réaffiche telles quelles.
+  // Quand la page est cachée, on change la clé du formulaire : au retour, il repart des valeurs
+  // d'origine (champs vides pour un ajout, données à jour pour une modification).
+  const [formKey, setFormKey] = useState(0);
+  useLayoutEffect(() => () => setFormKey((key) => key + 1), []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,7 +46,7 @@ export function WishForm({ wish, owner }: Props) {
         {wish ? "Modifier" : "Nouveau"} <em className="font-medium text-accent">{wish ? "le wish" : "wish"}</em>
       </h1>
 
-      <form onSubmit={handleSubmit}>
+      <form key={formKey} onSubmit={handleSubmit}>
         <PhotoField initialUrl={wish?.photoUrl} />
 
         <label className={labelClass}>
