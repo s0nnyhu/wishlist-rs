@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { ExternalLink, Pencil } from "lucide-react";
-import type { Wish } from "@/lib/generated/prisma/client";
+import type { ListedWish } from "@/lib/wish-types";
+import { LikeButton } from "@/components/like-button";
 import { PhotoViewer } from "@/components/photo-viewer";
 import { formatPrice, timeAgo, withProtocol } from "@/lib/format";
 
-type Props = { wish: Wish; pending?: boolean };
+type Props = { wish: ListedWish; pending?: boolean };
 
 export function WishCard({ wish, pending = false }: Props) {
   const firstLink = wish.links[0];
@@ -19,9 +20,19 @@ export function WishCard({ wish, pending = false }: Props) {
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">
           <h2 className="font-serif text-lg font-medium leading-tight">{wish.title}</h2>
-          {wish.price && (
-            <span className="whitespace-nowrap text-sm font-semibold">{formatPrice(wish.price)}</span>
-          )}
+          <span className="flex shrink-0 items-center gap-1.5">
+            {/* La clé remet l'étoile à jour quand la liste du serveur change */}
+            <LikeButton
+              key={`${wish.liked}-${wish.likeCount}`}
+              wishId={wish.id}
+              liked={wish.liked}
+              count={wish.likeCount}
+              disabled={pending}
+            />
+            {wish.price && (
+              <span className="whitespace-nowrap text-sm font-semibold">{formatPrice(wish.price)}</span>
+            )}
+          </span>
         </div>
 
         {wish.comment && <p className="mb-2.5 mt-1.5 text-sm italic text-body">« {wish.comment} »</p>}

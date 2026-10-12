@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Wish } from "@/lib/generated/prisma/client";
 import type { Owner } from "@/lib/generated/prisma/enums";
+import type { ListedWish } from "@/lib/wish-types";
 import { logout } from "@/lib/actions";
 import { OWNERS, ownerInfo } from "@/lib/owners";
 import { applyChanges, pruneChanges, usePendingChanges } from "@/lib/pending-store";
@@ -16,7 +16,7 @@ import { WishCard } from "@/components/wish-card";
 // Onglet actif conservé entre les navigations : après un ajout, on revient sur le bon onglet
 let lastOwner: Owner = OWNERS[0].value;
 
-export function WishList({ wishes }: { wishes: Wish[] }) {
+export function WishList({ wishes }: { wishes: ListedWish[] }) {
   const [owner, setOwner] = useState<Owner>(lastOwner);
   const pending = usePendingChanges();
 

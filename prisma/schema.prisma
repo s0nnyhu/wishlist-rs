@@ -31,6 +31,7 @@ model Wish {
   owner     Owner    @default(ROJO)
   // Ancien auteur (profils R / S, abandonnés) : plus renseigné par l'app
   addedBy   Person?
+  likes     WishLike[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -43,4 +44,14 @@ model LoginAttempt {
 
   @@index([ip, createdAt])
   @@index([createdAt])
+}
+
+// Coups de cœur : un par appareil (identifiant anonyme du cookie carnet_voter) et par wish
+model WishLike {
+  wishId    String
+  voterId   String
+  createdAt DateTime @default(now())
+  wish      Wish     @relation(fields: [wishId], references: [id], onDelete: Cascade)
+
+  @@id([wishId, voterId])
 }

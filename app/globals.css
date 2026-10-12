@@ -16,6 +16,7 @@
   --animate-fade-in: fade-in 0.2s ease-out both;
   --animate-slide-up: slide-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   --animate-zoom-in: zoom-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-pop: pop 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Opacité seulement : un transform casserait les boutons en position fixed */
@@ -27,6 +28,12 @@
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.35); }
+  100% { transform: scale(1); }
 }
 
 @keyframes zoom-in {

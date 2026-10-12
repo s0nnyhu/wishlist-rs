@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type { Wish } from "@/lib/generated/prisma/client";
+import type { ListedWish } from "@/lib/wish-types";
 import type { Owner } from "@/lib/generated/prisma/enums";
 import type { WishInput } from "@/lib/wish-input";
 
@@ -11,7 +12,7 @@ export type PendingChange = (
   | { type: "delete"; id: string }
 ) & { at: number; confirmed?: boolean };
 
-export type DisplayedWish = Wish & { pending?: boolean };
+export type DisplayedWish = ListedWish & { pending?: boolean };
 
 let changes: PendingChange[] = [];
 let toast: string | null = null;
@@ -75,7 +76,7 @@ export function useToast() {
 }
 
 // Applique les changements en attente à la liste venue du serveur
-export function applyChanges(wishes: Wish[], pending: PendingChange[]): DisplayedWish[] {
+export function applyChanges(wishes: ListedWish[], pending: PendingChange[]): DisplayedWish[] {
   let result: DisplayedWish[] = wishes;
 
   for (const change of pending) {
@@ -86,7 +87,17 @@ export function applyChanges(wishes: Wish[], pending: PendingChange[]): Displaye
     } else if (!result.some((wish) => wish.id === change.id)) {
       const now = new Date(change.at);
       result = [
-        { ...change.input, id: change.id, owner: change.owner, addedBy: null, createdAt: now, updatedAt: now, pending: true },
+        {
+          ...change.input,
+          id: change.id,
+          owner: change.owner,
+          addedBy: null,
+          createdAt: now,
+          updatedAt: now,
+          likeCount: 0,
+          liked: false,
+          pending: true,
+        },
         ...result,
       ];
     }
