@@ -10,10 +10,17 @@ type Props = {
   liked: boolean;
   count: number;
   disabled?: boolean;
+  className?: string;
 };
 
 // Étoile « coup de cœur » : bascule tout de suite, le serveur suit en arrière-plan
-export function LikeButton({ wishId, liked: initialLiked, count: initialCount, disabled = false }: Props) {
+export function LikeButton({
+  wishId,
+  liked: initialLiked,
+  count: initialCount,
+  disabled = false,
+  className = "",
+}: Props) {
   const router = useRouter();
   const [state, setState] = useState({ liked: initialLiked, count: initialCount });
   // Seule la réponse au dernier appui compte, même en tapant plusieurs fois vite
@@ -50,9 +57,9 @@ export function LikeButton({ wishId, liked: initialLiked, count: initialCount, d
       disabled={disabled}
       aria-pressed={state.liked}
       aria-label={label}
-      className={`press -my-2.5 -mr-2 inline-flex h-11 items-center gap-1 px-2 text-sm font-semibold transition-colors ${
+      className={`press inline-flex items-center gap-1 text-sm font-semibold transition-colors ${
         state.liked ? "text-accent" : "text-muted"
-      }`}
+      } ${className}`}
     >
       <Star
         aria-hidden="true"

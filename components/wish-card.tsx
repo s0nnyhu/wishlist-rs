@@ -13,26 +13,26 @@ export function WishCard({ wish, pending = false }: Props) {
   return (
     <article
       aria-busy={pending}
-      className={`mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4 transition-opacity ${pending ? "opacity-70" : ""}`}
+      className={`relative mb-3 flex gap-3.5 rounded-2xl border border-line bg-white p-4 pt-5 transition-opacity ${pending ? "opacity-70" : ""}`}
     >
+      {/* Pastille en débord dans le coin haut gauche ; la clé la remet à jour quand la liste du serveur change */}
+      <LikeButton
+        key={`${wish.liked}-${wish.likeCount}`}
+        wishId={wish.id}
+        liked={wish.liked}
+        count={wish.likeCount}
+        disabled={pending}
+        className="absolute -left-2 -top-3 z-10 h-9 rounded-full border border-line bg-white px-2.5 shadow-sm before:absolute before:-inset-1 before:content-['']"
+      />
+
       {wish.photoUrl && <PhotoViewer src={wish.photoUrl} title={wish.title} />}
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">
           <h2 className="font-serif text-lg font-medium leading-tight">{wish.title}</h2>
-          <span className="flex shrink-0 items-center gap-1.5">
-            {/* La clé remet l'étoile à jour quand la liste du serveur change */}
-            <LikeButton
-              key={`${wish.liked}-${wish.likeCount}`}
-              wishId={wish.id}
-              liked={wish.liked}
-              count={wish.likeCount}
-              disabled={pending}
-            />
-            {wish.price && (
-              <span className="whitespace-nowrap text-sm font-semibold">{formatPrice(wish.price)}</span>
-            )}
-          </span>
+          {wish.price && (
+            <span className="whitespace-nowrap text-sm font-semibold">{formatPrice(wish.price)}</span>
+          )}
         </div>
 
         {wish.comment && <p className="mb-2.5 mt-1.5 text-sm italic text-body">« {wish.comment} »</p>}
